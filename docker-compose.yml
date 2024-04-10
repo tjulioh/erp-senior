@@ -1,5 +1,6 @@
 services:
   angular:
+    image: tjulioh/erp-senior:latest
     restart: unless-stopped
     build:
       dockerfile: angular.dockerfile
