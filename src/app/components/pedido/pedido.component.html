@@ -1,0 +1,69 @@
+<div class="edit-form">
+  <div class="alert alert-danger alert-dismissible fade show" role="alert" [hidden]="!mensagem">
+    {{ mensagem }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <h4>
+    @if (current.id) {
+      Editando
+    } @else {
+      Criando
+    }
+    Pedido</h4>
+  <form class="row g-3">
+    <div class="col-md-6">
+      <label for="descricao" class="form-label">Descrição</label>
+      <input type="text" class="form-control" id="descricao" [(ngModel)]="current.descricao" name="descricao">
+    </div>
+    <div class="col-md-1">
+      <label for="numero" class="form-label">Numero</label>
+      <input type="number" class="form-control" id="numero" [(ngModel)]="current.numero" name="numero">
+    </div>
+    <div class="col-md-2">
+      <label for="situacao" class="form-label">Situação</label>
+      <input type="text" class="form-control" id="situacao" [(ngModel)]="current.situacao" disabled name="situacao">
+    </div>
+    <div class="col-md-1">
+      <label for="desconto" class="form-label">Desconto</label>
+      <input type="number" class="form-control" id="desconto" [(ngModel)]="current.desconto" name="desconto">
+    </div>
+    <div class="col-md-2">
+      <label for="criado" class="form-label">Criado</label>
+      <input type="text" class="form-control" id="criado" [(ngModel)]="current.criado" name="criado" disabled>
+    </div>
+    <app-pedido-item-list
+      [current]="current"
+    ></app-pedido-item-list>
+    <div class="col-md-12">
+      <span>
+        Valor Total: {{ current.valorTotal | currency:'BRL':true }}
+        (Desconto de: {{ current.valorTotalDesconto | currency:'BRL':true }})
+      </span>
+    </div>
+    @if (current.id) {
+      <div class="col-auto">
+        <button class="btn btn-danger" (click)="delete()">
+          <i class="bi bi-trash"></i>Excluir
+        </button>
+      </div>
+      <div class="col-auto">
+        <button
+          type="submit"
+          class="btn btn-success"
+          (click)="update()">
+          <i class="bi bi-floppy"></i>
+          Salvar
+        </button>
+      </div>
+    } @else {
+      <div class="col-auto">
+        <button
+          type="submit"
+          class="btn btn-success"
+          (click)="create()">
+          Criar
+        </button>
+      </div>
+    }
+  </form>
+</div>

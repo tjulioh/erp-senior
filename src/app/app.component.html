@@ -1,0 +1,20 @@
+<div>
+  <nav class="navbar navbar-expand navbar-dark bg-dark ps-3">
+    <a class="navbar-brand"><i class="bi bi-cash-coin"></i>
+       ERP Senior</a>
+    <div class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a routerLink="" class="nav-link"><i class="bi bi-bar-chart-fill"></i> Inicio</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="pedido/lista" class="nav-link"><i class="bi bi-basket2-fill"></i> Pedidos</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="item/lista" class="nav-link"><i class="bi bi-box-seam-fill"></i> Itens</a>
+      </li>
+    </div>
+  </nav>
+  <div class="container mt-3">
+    <router-outlet></router-outlet>
+  </div>
+</div>

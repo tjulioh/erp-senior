@@ -1,0 +1,62 @@
+<div class="edit-form">
+  <div class="alert alert-danger alert-dismissible fade show" role="alert" [hidden]="!mensagem">
+    {{ mensagem }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <h4>
+    @if (current.id) {
+      Editando
+    } @else {
+      Criando
+    }
+    Item</h4>
+  <form class="row g-3">
+    <div class="col-md-6">
+      <label for="descricao" class="form-label">Descrição</label>
+      <input type="text" class="form-control" id="descricao" [(ngModel)]="current.descricao" name="descricao">
+    </div>
+    <div class="col-md-2">
+      <label for="valor" class="form-label">Valor</label>
+      <input type="number" class="form-control" id="valor" [(ngModel)]="current.valor" name="valor">
+    </div>
+    <div class="col-md-4">
+      <label for="item" class="form-label">Item</label>
+      <select class="form-select" aria-label="Item" [(ngModel)]="current.tipo" id="item" [ngModelOptions]="{standalone: true}">
+        <option *ngFor="let tipo of tipos" [value]="tipo">
+          {{ tipo }}
+        </option>
+      </select>
+    </div>
+    <div class="col-md-12">
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" role="switch" id="ativo" [(ngModel)]="current.ativo" [ngModelOptions]="{standalone: true}">
+        <label class="form-check-label" for="ativo">Ativo</label>
+      </div>
+    </div>
+    @if (current.id) {
+      <div class="col-auto">
+        <button class="btn btn-danger" (click)="delete()">
+          <i class="bi bi-trash"></i>Excluir
+        </button>
+      </div>
+      <div class="col-auto">
+        <button
+          type="submit"
+          class="btn btn-success"
+          (click)="update()">
+          <i class="bi bi-floppy"></i>
+          Salvar
+        </button>
+      </div>
+    } @else {
+      <div class="col-auto">
+        <button
+          type="submit"
+          class="btn btn-success"
+          (click)="create()">
+          Criar
+        </button>
+      </div>
+    }
+  </form>
+</div>
