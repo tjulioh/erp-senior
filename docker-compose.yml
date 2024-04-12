@@ -5,11 +5,5 @@ services:
     build:
       dockerfile: angular.dockerfile
       context: .
-    container_name: 'angular'
     ports:
-      - '4200:4200'
-    volumes:
-      - 'angular:/usr/src/app'
-
-volumes:
-  angular:
+      - '80:80'
