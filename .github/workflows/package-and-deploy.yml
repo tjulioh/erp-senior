@@ -54,7 +54,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            docker stop ${{ env.IMAGE_NAME }}:${{ env.BRANCH_NAME }} || true
-            docker rm ${{ env.IMAGE_NAME }}:${{ env.BRANCH_NAME }} || true
+            docker stop ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BRANCH_NAME }} || true
+            docker rm ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BRANCH_NAME }} || true
             docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BRANCH_NAME }}
-            docker run -d -p 80:80 ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BRANCH_NAME }}
+            docker run -d ${{ secrets.CONTAINER_PORTS }} ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BRANCH_NAME }} ${{ secrets.CONTAINER_ENVIRONMENT }}
