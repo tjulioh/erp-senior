@@ -4,6 +4,7 @@ on:
     branches: ['release']
 env:
   REGISTRY: ghcr.io
+  DOCKERFILE_NAME: angular.dockerfile
   REPOSITORY_NAME: ${{ github.repository }}
   BRANCH_NAME: ${{ github.base_ref || github.ref_name }}
 jobs:
@@ -35,7 +36,7 @@ jobs:
         with:
           context: .
           platforms: linux/amd64,linux/arm64
-          file: angular.dockerfile
+          file: ${{ env.DOCKERFILE_NAME }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
@@ -58,4 +59,4 @@ jobs:
             docker rm $(docker stop $(docker ps -a -q --filter ancestor=${{ env.REGISTRY }}/${{ env.REPOSITORY_NAME }}:${{ env.BRANCH_NAME }}))
             docker rmi ${{ env.REGISTRY }}/${{ env.REPOSITORY_NAME }}:${{ env.BRANCH_NAME }}
             docker pull ${{ env.REGISTRY }}/${{ env.REPOSITORY_NAME }}:${{ env.BRANCH_NAME }}
-            docker run --name ${{ github.event.repository.name }} -d ${{ secrets.CONTAINER_PORTS }} ${{ env.REGISTRY }}/${{ env.REPOSITORY_NAME }}:${{ env.BRANCH_NAME }} ${{ secrets.CONTAINER_ENVIRONMENT }}
+            docker run --name ${{ github.event.repository.name }} ${{ secrets.CONTAINER_PORTS }} ${{ secrets.CONTAINER_ENVIRONMENT }} -d ${{ env.REGISTRY }}/${{ env.REPOSITORY_NAME }}:${{ env.BRANCH_NAME }}
