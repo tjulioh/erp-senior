@@ -7,4 +7,4 @@ services:
       dockerfile: angular.dockerfile
       context: .
     ports:
-      - '80:80'
+      - '81:80'
