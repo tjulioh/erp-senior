@@ -2,8 +2,9 @@ services:
   angular:
     image: tjulioh/erp-senior:latest
     restart: unless-stopped
+    container_name: angular
     build:
       dockerfile: angular.dockerfile
       context: .
     ports:
-      - '80:80'
+      - '80:81'
