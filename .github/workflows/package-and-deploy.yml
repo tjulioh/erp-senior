@@ -4,7 +4,7 @@ on:
     branches: ['release']
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  REPOSITORY_NAME: ${{ github.repository }}
   BRANCH_NAME: ${{ github.base_ref || github.ref_name }}
 jobs:
   build-and-push-image:
@@ -29,7 +29,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ env.REPOSITORY_NAME }}
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
@@ -54,7 +54,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            docker stop ${{ env.IMAGE_NAME }} || true
-            docker rm ${{ env.IMAGE_NAME }} || true
-            docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BRANCH_NAME }}
-            docker run --name ${{ github.repository }} -d ${{ secrets.CONTAINER_PORTS }} ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BRANCH_NAME }} ${{ secrets.CONTAINER_ENVIRONMENT }}
+            docker stop ${{ env.REGISTRY }}/${{ env.REPOSITORY_NAME }} || true
+            docker rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_NAME }} || true
+            docker pull ${{ env.REGISTRY }}/${{ env.REPOSITORY_NAME }}:${{ env.BRANCH_NAME }}
+            docker run --name ${{ github.event.repository.name }} -d ${{ secrets.CONTAINER_PORTS }} ${{ env.REGISTRY }}/${{ env.REPOSITORY_NAME }}:${{ env.BRANCH_NAME }} ${{ secrets.CONTAINER_ENVIRONMENT }}
